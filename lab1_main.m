@@ -25,25 +25,25 @@ e_mean = [10 5];
 % Class E
 [data_e, contour_e] = get_data(e_mean, [10 -5;-5 20], 150);
 %% Part 2: Generating Clusters #2
-%  Plotting Classes A and B together and C, D, and E together.
+% Plotting Classes A and B together and C, D, and E together.
 
 figure
 plot_data_epc(data_a, contour_a, 'b', 'r');
 plot_data_epc(data_b, contour_b, 'g', 'm');
 hold off
-
+% 
 figure
 plot_data_epc(data_c, contour_c, 'b', 'r');
 plot_data_epc(data_d, contour_d, 'g', 'm');
 plot_data_epc(data_e, contour_e, 'c', 'y');
-hold off
+% hold off
 
 %% Part 3 Classification
 
 % PREPARE THE GRIDS
 grid_step = 0.05;
 [xValuesAB, yValuesAB, MED_AB] = makeGrid(grid_step, data_a, data_b);
-[xValuesCDE, yValsuesCDE, MED_CDE] = makeGrid(grid_step, data_c, data_d, data_e);
+[xValuesCDE, yValuesCDE, MED_CDE] = makeGrid(grid_step, data_c, data_d, data_e);
 
 
 AB_means = [a_mean;b_mean]; 
@@ -52,10 +52,34 @@ CDE_means = [c_mean;d_mean;e_mean];
 %iterate through grid AB
 for i = 1:size(MED_AB,1)
     for j = 1:size(MED_AB,2)
-        MED_AB(i,j)= med(AB_means,[i j]);
+        z = [yValuesAB(i) xValuesAB(j)];
+        class = med(AB_means,z);   
+        MED_AB(i,j)=class;
     end
 end
 
+figure
+contourf(xValuesAB, yValuesAB, MED_AB,1);
+hold on
+plot_data_epc(data_a, contour_a, 'b', 'r');
+plot_data_epc(data_b, contour_b, 'g', 'm');
+hold off
+
 %iterate through grid CDE
-% class_CDE = med(CDE_means,z);
+for i = 1:size(MED_CDE,1)
+    for j = 1:size(MED_CDE,2)
+        z = [yValuesCDE(i) xValuesCDE(j)];
+        class = med(CDE_means,z);    
+        MED_CDE(i,j)=class;
+    end
+end
+
+figure
+contourf(xValuesCDE, yValuesCDE, MED_CDE,1);
+hold on
+plot_data_epc(data_c, contour_c, 'b', 'r');
+plot_data_epc(data_d, contour_d, 'g', 'm');
+plot_data_epc(data_e, contour_e, 'c', 'y');
+hold off
+
 
