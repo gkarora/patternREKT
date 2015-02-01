@@ -1,15 +1,13 @@
 function class = med(x,z)
-    min_distance = 100;
-    closest_class = 1;
     x_size = size(x,1);
-
+    
+    distances = [];
     for n = 1:x_size
         y = x(n,:);
-        distance = norm(y-z);
-        if distance<min_distance;
-            closest_class = n;
-            min_distance = distance;
-        end
+        z_distance = norm(y-z);
+        distances = [distances z_distance];
     end
-    class = closest_class;
+    
+    min_distance = min(distances);
+    class = find(distances==min_distance);
 end
