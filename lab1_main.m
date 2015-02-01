@@ -28,14 +28,14 @@ e_mean = [10 5];
 % Plotting Classes A and B together and C, D, and E together.
 
 figure
-plot_data_epc(data_a, contour_a, 'b', 'r');
-plot_data_epc(data_b, contour_b, 'g', 'm');
+plot_data_epc(data_a, contour_a, 'b', 'b');
+plot_data_epc(data_b, contour_b, 'g', 'g');
 hold off
 % 
 figure
-plot_data_epc(data_c, contour_c, 'b', 'r');
-plot_data_epc(data_d, contour_d, 'g', 'm');
-plot_data_epc(data_e, contour_e, 'c', 'y');
+plot_data_epc(data_c, contour_c, 'b', 'b');
+plot_data_epc(data_d, contour_d, 'g', 'g');
+plot_data_epc(data_e, contour_e, 'm', 'm');
 % hold off
 
 %% Part 3 Classification
