@@ -42,16 +42,16 @@ hold off
 
 % PREPARE THE GRIDS
 grid_step = 0.05;
-[xValuesAB, yValuesAB, MED_AB] = gridPrep(grid_step, data_a, data_b);
-[xValuesCDE, yValsuesCDE, MED_CDE] = gridPrep(grid_step, data_c, data_d, data_e);
+[xValuesAB, yValuesAB, MED_AB] = makeGrid(grid_step, data_a, data_b);
+[xValuesCDE, yValsuesCDE, MED_CDE] = makeGrid(grid_step, data_c, data_d, data_e);
 
 
 AB_means = [a_mean;b_mean]; 
 CDE_means = [c_mean;d_mean;e_mean];
 
 %iterate through grid AB
-for i = 1:size(MED-AB,1)
-    for j = 1:size(MED+AB,2)
+for i = 1:size(MED_AB,1)
+    for j = 1:size(MED_AB,2)
         MED_AB(i,j)= med(AB_means,[i j]);
     end
 end
