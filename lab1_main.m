@@ -40,5 +40,8 @@ hold off
 
 %% Part 3 Classification
 
+% PREPARE THE GRIDS
+[xValuesAB, yValuesAB, MED-AB] = gridPrep(gridSize, A, B);
+[xValuesCDE, yValsuesCDE, MED-CDE] = gridPrep(gridSize, C, D, E);
 
 
