@@ -1,4 +1,6 @@
 %% Data
+clear all
+close all
 
 a_mean = [5 10];
 b_mean = [10 15];
@@ -9,27 +11,34 @@ e_mean = [10 5];
 a_sigma = [8 0;0 4];
 b_sigma = [8 0;0 4];
 c_sigma = [8 4;4 40];
-d_sigma = [8 0;0 8];
-e_sigma = [10 -5;-5 20];
+d_sigma = [8 0; 0 8];
+e_sigma = [10 -5; -5 20];
+
+a_number = 200;
+b_number = 200;
+c_number = 100;
+d_number = 200;
+e_number = 150;
 
 %% Part 2: Generating Clusters #1
 %  Plotting each class against normally distributed data with mean 0 and 
 %  variance 1.
 
 % Class A
-[data_a, contour_a] = get_data(a_mean, a_sigma, 200);
+[data_a, contour_a] = get_data(a_mean, a_sigma, a_number);
 
 % Class B
-[data_b, contour_b] = get_data(b_mean, b_sigma, 200);
+[data_b, contour_b] = get_data(b_mean, b_sigma, b_number);
 
 % Class C
-[data_c, contour_c] = get_data(c_mean, c_sigma, 100);
+[data_c, contour_c] = get_data(c_mean, c_sigma, c_number);
 
 % Class D
-[data_d, contour_d] = get_data(d_mean, d_sigma, 200);
+[data_d, contour_d] = get_data(d_mean, d_sigma, d_number);
 
 % Class E
-[data_e, contour_e] = get_data(e_mean, e_sigma, 150);
+[data_e, contour_e] = get_data(e_mean, e_sigma, e_number);
+
 %% Part 2: Generating Clusters #2
 % Plotting Classes A and B together and C, D, and E together.
 
@@ -51,6 +60,11 @@ grid_step = 0.05;
 [xValuesAB, yValuesAB, MED_AB] = makeGrid(grid_step, data_a, data_b);
 [xValuesCDE, yValuesCDE, MED_CDE] = makeGrid(grid_step, data_c, data_d, data_e);
 
+MAP_AB = MED_AB;
+MAP_CDE = MED_CDE;
+GED_AB = MED_AB;
+GED_CDE = MED_CDE;
+
 
 AB_means = [a_mean;b_mean]; 
 CDE_means = [c_mean;d_mean;e_mean];
@@ -63,9 +77,9 @@ for i = 1:size(MED_AB,1)
         MED_AB(i,j)=class;
     end
 end
-
-figure
-contourf(xValuesAB, yValuesAB, MED_AB,1);
+figure(99)
+% contourf(xValuesAB, yValuesAB, MED_AB,1);
+contour(xValuesAB, yValuesAB, MED_AB,1,'k');
 hold on
 plot_data_epc(data_a, contour_a, 'b');
 plot_data_epc(data_b, contour_b, 'r');
@@ -80,46 +94,68 @@ for i = 1:size(MED_CDE,1)
     end
 end
 
-figure
-contourf(xValuesCDE, yValuesCDE, MED_CDE,2);
+figure(100)
+% contourf(xValuesCDE, yValuesCDE, MED_CDE,2);
+contour(xValuesCDE, yValuesCDE, MED_CDE,2,'k');
 hold on
 plot_data_epc(data_c, contour_c, 'b');
 plot_data_epc(data_d, contour_d, 'g');
 plot_data_epc(data_e, contour_e, 'r');
 hold off
 
+% STUPID RETARDED MAP CLASSIFIER
 
-%% Part 3: GED Classifier
+for i = 1:size(MAP_AB,1)
+    for j = 1:size(MAP_AB,2)
+        z = [xValuesAB(j) yValuesAB(i)];
+        class = map_2(z,a_mean,a_sigma,a_number,...
+                        b_mean,b_sigma,b_number);
+        MAP_AB(i,j)=class;
+    end
+end
+figure(99)
+hold on
+contour(xValuesAB,yValuesAB,MAP_AB,1,'r');
+hold off
+
+for i = 1:size(MAP_CDE,1)
+    for j = 1:size(MAP_CDE,2)
+         z = [xValuesCDE(j) yValuesCDE(i)];
+         class = map_3(z,c_mean,c_sigma,c_number,...
+                         d_mean,d_sigma,d_number,...
+                         e_mean,e_sigma,e_number);
+         MAP_CDE(i,j)=class;
+    end
+end
+figure(100)
+hold on
+contour(xValuesCDE,yValuesCDE,MAP_CDE,2,'r');
+hold off
+
 % PREPARE THE GRIDS
-[GED_xValuesAB, GED_yValuesAB, GED_AB] = makeGrid(grid_step, data_a, data_b);
-[GED_xValuesCDE, GED_yValuesCDE, GED_CDE] = makeGrid(grid_step, data_c, data_d, data_e);
 %  A and B
 for i = 1:size(GED_AB,1)
     for j = 1:size(GED_AB,2)
-        z = [GED_xValuesAB(j) GED_yValuesAB(i)];
+        z = [xValuesAB(j) yValuesAB(i)];
         GED_AB(i,j) = ged_2(z, a_sigma, a_mean, b_sigma, b_mean); 
     end
 end
 
-figure
-contourf(GED_xValuesAB, GED_yValuesAB, GED_AB,1);
+figure(99)
 hold on
-plot_data_epc(data_a, contour_a, 'b');
-plot_data_epc(data_b, contour_b, 'r');
+contour(xValuesAB,yValuesAB,GED_AB,1,'c');
 hold off
 
 %iterate through grid CDE
 for i = 1:size(GED_CDE,1)
     for j = 1:size(GED_CDE,2)
-        z = [GED_xValuesCDE(j) GED_yValuesCDE(i)];
+        z = [xValuesCDE(j) yValuesCDE(i)];
         GED_CDE(i,j) = ged_3(z, c_sigma, c_mean, d_sigma, d_mean, e_sigma, e_mean); 
     end
 end
 
-figure
-contourf(GED_xValuesCDE, GED_yValuesCDE, GED_CDE,2);
+figure(100)
 hold on
-plot_data_epc(data_c, contour_c, 'b');
-plot_data_epc(data_d, contour_d, 'g');
-plot_data_epc(data_e, contour_e, 'r');
+contour(xValuesCDE,yValuesCDE,GED_CDE,2,'c');
 hold off
+
