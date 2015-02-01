@@ -9,9 +9,9 @@ equi_prob_contour = apply_class(mu, sigma, length(ellipse), ellipse);
 
 figure
 subplot(2,1,1);
-plot_data_epc(points, ellipse, 'b', 'r');
+plot_data_epc(points, ellipse, 'b');
 subplot(2,1,2);
-plot_data_epc(points_in_class, equi_prob_contour, 'b', 'r');
+plot_data_epc(points_in_class, equi_prob_contour, 'b');
 hold off
 
 data = points_in_class;
