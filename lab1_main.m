@@ -52,7 +52,7 @@ CDE_means = [c_mean;d_mean;e_mean];
 %iterate through grid AB
 for i = 1:size(MED_AB,1)
     for j = 1:size(MED_AB,2)
-        z = [yValuesAB(i) xValuesAB(j)];
+        z = [xValuesAB(j) yValuesAB(i)];
         class = med(AB_means,z);   
         MED_AB(i,j)=class;
     end
@@ -68,7 +68,7 @@ hold off
 %iterate through grid CDE
 for i = 1:size(MED_CDE,1)
     for j = 1:size(MED_CDE,2)
-        z = [yValuesCDE(i) xValuesCDE(j)];
+        z = [xValuesCDE(j) yValuesCDE(i)];
         class = med(CDE_means,z);    
         MED_CDE(i,j)=class;
     end
