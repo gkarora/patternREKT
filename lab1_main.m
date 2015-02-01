@@ -49,7 +49,7 @@ grid_step = 0.05;
 AB_means = [a_mean;b_mean]; 
 CDE_means = [c_mean;d_mean;e_mean];
 
-%iterate through grid AB
+% iterate through grid AB
 for i = 1:size(MED_AB,1)
     for j = 1:size(MED_AB,2)
         z = [xValuesAB(j) yValuesAB(i)];
@@ -81,5 +81,31 @@ plot_data_epc(data_c, contour_c, 'b');
 plot_data_epc(data_d, contour_d, 'g');
 plot_data_epc(data_e, contour_e, 'r');
 hold off
+
+
+%kNN - dis dont work doe
+%iterate through grid AB
+[xValuesAB, yValuesAB, KNN_AB] = makeGrid(grid_step, data_a, data_b);
+
+group = [repmat(1,size(data_a,1),1); repmat(1,size(data_b, 1),1)];
+
+for i = 1:size(KNN_AB,1)
+    for j = 1:size(KNN_AB,2)
+        z = [xValuesAB(j) yValuesAB(i)];
+        class = knnclassify(z,[data_a;data_b],group);
+        KNN_AB(i,j)=class;
+    end
+end
+
+figure
+contourf(xValuesAB, yValuesAB, KNN_AB,1);
+hold on
+plot_data_epc(data_a, contour_a, 'b');
+plot_data_epc(data_b, contour_b, 'r');
+hold off
+
+
+
+
 
 
