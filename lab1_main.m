@@ -1,6 +1,4 @@
-%% Part 2: Generating Clusters #1
-%  Plotting each class against normally distributed data with mean 0 and 
-%  variance 1.
+%% Data
 
 a_mean = [5 10];
 b_mean = [10 15];
@@ -8,6 +6,9 @@ c_mean = [5 10];
 d_mean = [15 10];
 e_mean = [10 5];
 
+%% Part 2: Generating Clusters #1
+%  Plotting each class against normally distributed data with mean 0 and 
+%  variance 1.
 
 % Class A
 [data_a, contour_a] = get_data(a_mean, [8 0;0 4], 200);
