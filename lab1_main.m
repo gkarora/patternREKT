@@ -46,7 +46,7 @@ hold off
 
 %% Part 3 Classification
 
-PREPARE THE GRIDS
+%PREPARE THE GRIDS
 grid_step = 0.05;
 [xValuesAB, yValuesAB, MED_AB] = makeGrid(grid_step, data_a, data_b);
 [xValuesCDE, yValuesCDE, MED_CDE] = makeGrid(grid_step, data_c, data_d, data_e);
