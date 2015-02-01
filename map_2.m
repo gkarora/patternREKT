@@ -7,6 +7,10 @@
 % muB: mean of class B
 % SigmaB: covariance of class B
 % numB: number of samples in class B
+%
+% OUTPUT: the number of the class the point might belong to
+% 1 -> Class A
+% 2 -> Class B
 
 
 % Notes re: implementation:
