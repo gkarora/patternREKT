@@ -41,7 +41,21 @@ hold off
 %% Part 3 Classification
 
 % PREPARE THE GRIDS
-[xValuesAB, yValuesAB, MED-AB] = gridPrep(gridSize, A, B);
-[xValuesCDE, yValsuesCDE, MED-CDE] = gridPrep(gridSize, C, D, E);
+grid_step = 0.05;
+[xValuesAB, yValuesAB, MED_AB] = gridPrep(grid_step, data_a, data_b);
+[xValuesCDE, yValsuesCDE, MED_CDE] = gridPrep(grid_step, data_c, data_d, data_e);
 
+
+AB_means = [a_mean;b_mean]; 
+CDE_means = [c_mean;d_mean;e_mean];
+
+%iterate through grid AB
+for i = 1:size(MED-AB,1)
+    for j = 1:size(MED+AB,2)
+        MED_AB(i,j)= med(AB_means,[i j]);
+    end
+end
+
+%iterate through grid CDE
+% class_CDE = med(CDE_means,z);
 
