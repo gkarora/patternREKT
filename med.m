@@ -5,8 +5,8 @@ function class = med(x,z)
     row_size = x_size(1);
 
     for n = 1:row_size
-        y = x(n,:)
-        distance = norm(y-z)
+        y = x(n,:);
+        distance = norm(y-z);
         if distance<min_distance;
             closest_class = x(n,:);
             min_distance = distance;
