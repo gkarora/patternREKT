@@ -75,7 +75,7 @@ for i = 1:size(MED_CDE,1)
 end
 
 figure
-contourf(xValuesCDE, yValuesCDE, MED_CDE,1);
+contourf(xValuesCDE, yValuesCDE, MED_CDE,2);
 hold on
 plot_data_epc(data_c, contour_c, 'b', 'r');
 plot_data_epc(data_d, contour_d, 'g', 'm');
