@@ -40,7 +40,7 @@ e_number = 150;
 [data_e, contour_e] = get_data(e_mean, e_sigma, e_number);
 
 %% Part 2: Generating Clusters #2
-% Plotting Classes A and B together and C, D, and E together.
+%  Plotting Classes A and B together and C, D, and E together.
 
 figure
 plot_data_epc(data_a, contour_a, 'b');
@@ -64,7 +64,10 @@ MAP_AB = MED_AB;
 MAP_CDE = MED_CDE;
 GED_AB = MED_AB;
 GED_CDE = MED_CDE;
-
+NN_AB = MED_AB;
+NN_CDE = MED_CDE;
+KNN_AB = MED_AB;
+KNN_CDE = MED_CDE;
 
 AB_means = [a_mean;b_mean]; 
 CDE_means = [c_mean;d_mean;e_mean];
@@ -159,27 +162,38 @@ hold on
 contour(xValuesCDE,yValuesCDE,GED_CDE,2,'c');
 hold off
 
-%kNN - dis dont work doe
-%iterate through grid AB
-[xValuesAB, yValuesAB, KNN_AB] = makeGrid(grid_step, data_a, data_b);
-
-group = [repmat(1,size(data_a,1),1); repmat(1,size(data_b, 1),1)];
-
-for i = 1:size(KNN_AB,1)
-    for j = 1:size(KNN_AB,2)
-        z = [xValuesAB(j) yValuesAB(i)];
-        class = knnclassify(z,[data_a;data_b],group);
-        KNN_AB(i,j)=class;
-    end
-end
-
-figure
-contourf(xValuesAB, yValuesAB, KNN_AB,1);
-hold on
-plot_data_epc(data_a, contour_a, 'b');
-plot_data_epc(data_b, contour_b, 'r');
-hold off
-
+% %NN - dis work doe
+% %iterate through grid AB
+% 
+% for i = 1:size(KNN_AB,1)
+%     for j = 1:size(KNN_AB,2)
+%         z = [xValuesAB(j) yValuesAB(i)];
+%         NN_AB(i,j) = nn_2(z,data_a, data_b);
+%     end
+% end
+% 
+% figure(110)
+% hold on
+% plot_data_epc(data_a, contour_a, 'b');
+% plot_data_epc(data_b, contour_b, 'r');
+% contour(xValuesAB,yValuesAB,NN_AB,2,'c');
+% hold off
+% 
+% %NN_CDE
+% for i = 1:size(NN_CDE,1)
+%     for j = 1:size(NN_CDE,2)
+%         z = [xValuesCDE(j) yValuesCDE(i)];
+%         NN_CDE(i,j) = nn_3(z,data_c, data_d, data_e);
+%     end
+% end
+% 
+% figure(120)
+% hold on
+% plot_data_epc(data_c, contour_c, 'b');
+% plot_data_epc(data_d, contour_d, 'g');
+% plot_data_epc(data_e, contour_e, 'r');
+% contour(xValuesCDE,yValuesCDE,NN_CDE,2,'c');
+% hold off
 
 
 
