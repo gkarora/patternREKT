@@ -162,11 +162,11 @@ hold on
 contour(xValuesCDE,yValuesCDE,GED_CDE,2,'c');
 hold off
 
-% %NN - dis work doe
-% %iterate through grid AB
-% 
-% for i = 1:size(KNN_AB,1)
-%     for j = 1:size(KNN_AB,2)
+%NN - dis work doe
+%iterate through grid AB
+
+% for i = 1:size(NN_AB,1)
+%     for j = 1:size(NN_AB,2)
 %         z = [xValuesAB(j) yValuesAB(i)];
 %         NN_AB(i,j) = nn_2(z,data_a, data_b);
 %     end
@@ -178,7 +178,7 @@ hold off
 % plot_data_epc(data_b, contour_b, 'r');
 % contour(xValuesAB,yValuesAB,NN_AB,2,'c');
 % hold off
-% 
+
 % %NN_CDE
 % for i = 1:size(NN_CDE,1)
 %     for j = 1:size(NN_CDE,2)
@@ -196,6 +196,37 @@ hold off
 % hold off
 
 
-
+% %KNN
+% %iterate through grid AB
+% 
+% for i = 1:size(KNN_AB,1)
+%     for j = 1:size(KNN_AB,2)
+%         z = [xValuesAB(j) yValuesAB(i)];
+%         KNN_AB(i,j) = knn_2(z,data_a, data_b);
+%     end
+% end
+% 
+% figure(130)
+% hold on
+% plot_data_epc(data_a, contour_a, 'b');
+% plot_data_epc(data_b, contour_b, 'r');
+% contour(xValuesAB,yValuesAB,KNN_AB,2,'c');
+% hold off
+% 
+% %KNN_CDE
+% for i = 1:size(KNN_CDE,1)
+%     for j = 1:size(KNN_CDE,2)
+%         z = [xValuesCDE(j) yValuesCDE(i)];
+%         KNN_CDE(i,j) = knn_3(z,data_c, data_d, data_e);
+%     end
+% end
+% 
+% figure(140)
+% hold on
+% plot_data_epc(data_c, contour_c, 'b');
+% plot_data_epc(data_d, contour_d, 'g');
+% plot_data_epc(data_e, contour_e, 'r');
+% contour(xValuesCDE,yValuesCDE,KNN_CDE,2,'c');
+% hold off
 
 
