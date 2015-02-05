@@ -230,3 +230,36 @@ hold off
 % hold off
 
 
+%Error Calculation
+error_MED_AB = 0;
+
+x_min = min(data_a(:,1))
+y_min = min(data_a(:,2))
+
+for i = 1:size(data_a,1)
+    x = data_a(i,1);
+    y = data_a(i,2);
+    
+    x_index = 0;
+    y_index = 0;
+ 
+    if(x_min<0)
+        x_index = round((round((x+x_min)/0.05)*0.05)/grid_step) + 1
+    else
+        x_index = round((round((x-x_min)/0.05)*0.05)/grid_step) + 1
+    end
+    
+    if(y_min<0)
+        y_index = round((round((y+y_min)/0.05)*0.05)/grid_step) + 1
+    else
+        y_index = round((round((y-y_min)/0.05)*0.05)/grid_step) + 1
+    end
+
+    class = MED_AB(x_index, y_index)
+end
+error_MED_AB
+
+
+
+
+
