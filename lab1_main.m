@@ -231,36 +231,53 @@ hold off
 % hold off
 
 
-%Error Calculation
-error_MED_AB = 0;
-
-x_min = min(data_a(:,1))
-y_min = min(data_a(:,2))
-
-for i = 1:size(data_a,1)
-    x = data_a(i,1);
-    y = data_a(i,2);
-    
-    x_index = 0;
-    y_index = 0;
- 
-    if(x_min<0)
-        x_index = round((round((x+x_min)/0.05)*0.05)/grid_step) + 1
-    else
-        x_index = round((round((x-x_min)/0.05)*0.05)/grid_step) + 1
-    end
-    
-    if(y_min<0)
-        y_index = round((round((y+y_min)/0.05)*0.05)/grid_step) + 1
-    else
-        y_index = round((round((y-y_min)/0.05)*0.05)/grid_step) + 1
-    end
-
-    class = MED_AB(x_index, y_index)
-end
 
 
+%% Part 4: Error Calculations
+% Recall that P(error) is the probability of making an incorrect
+% classification. A simple way to determine this is to generate MORE data
+% from the known distributions and then attempt to classify them using the
+% ones we have created. 
 
 
+% P(error) = incorrect classifications / total samples. Make sure to run it
+% for a bunch of new data generated from EACH distribution.
+
+% Class A
+[data_a_new, contour_a] = get_data(a_mean, a_sigma, a_number);
+% Class B
+[data_b_new, contour_b] = get_data(b_mean, b_sigma, b_number);
+% Class C
+[data_c_new, contour_c] = get_data(c_mean, c_sigma, c_number);
+% Class D
+[data_d_new, contour_d] = get_data(d_mean, d_sigma, d_number);
+% Class E
+[data_e_new, contour_e] = get_data(e_mean, e_sigma, e_number);
+
+% The confusion matrix is a table comparing Predicted to Actual values. The
+% reason that we want to do error calculation outside of a function is so
+% we can leverage the classified data to create this table.
+%             Predicted
+%           C   D   E
+%         C 
+% Actual  D    
+%         E
 
 
+% If we tried to run 100 new points from know distributions, IE, generate
+% 100 new data points from each C, D, E and then classify them, a perfect
+% classifier would generate a confusion matrix of:
+% 100   0       0
+% 0     100     0
+% 0     0       100
+
+% in reality, this is not the case. We might have numbers like:
+% 55    22      33
+% 11    75      14
+% 19    18      63        
+
+% correct classifications lie along the diagonals. Although if we generate
+% a point that is right along a decision boundry in THEORY we wouldn't
+% classify it, our implementations do. As a consequence, the sum of the
+% values in each row should be the total number of data points generated
+% from that class that we have attempted to classify.
