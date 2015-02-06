@@ -57,8 +57,9 @@ hold off
 
 %PREPARE THE GRIDS
 grid_step = 0.05;
-[xValuesAB, yValuesAB, MED_AB] = makeGrid(grid_step, data_a, data_b);
-[xValuesCDE, yValuesCDE, MED_CDE] = makeGrid(grid_step, data_c, data_d, data_e);
+%[xValuesAB, yValuesAB, MED_AB] = makeGrid(grid_step, data_a, data_b);
+[xValuesAB, yValuesAB, MED_AB] = makeGrid2(grid_step, data_a, data_b);
+[xValuesCDE, yValuesCDE, MED_CDE] = makeGrid3(grid_step, data_c, data_d, data_e);
 
 MAP_AB = MED_AB;
 MAP_CDE = MED_CDE;
@@ -257,7 +258,7 @@ for i = 1:size(data_a,1)
 
     class = MED_AB(x_index, y_index)
 end
-error_MED_AB
+
 
 
 

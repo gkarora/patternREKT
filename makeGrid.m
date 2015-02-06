@@ -23,14 +23,15 @@ function [gridXValues, gridYValues, classifiedValues] = makeGrid(gridStep, varar
     for i = 1:length(varargin)
         xVals = varargin{i}(:, 1);
         yVals = varargin{i}(:, 2);
-        minX = [ minX min(xVals) ];
-        minY = [ minY min(yVals) ];
-        maxX = [ maxX max(xVals) ];
-        maxY = [ maxY max(yVals) ];
+        minX = min([ minX min(xVals) ]);
+        minY = min([ minY min(yVals) ]);
+        maxX = max([ maxX max(xVals) ]);
+        maxY = max([ maxY max(yVals) ]);
     end
+    
     % add a margin of size 0.5 to upper and lower bounds of x & y
-    gridXValues = min(xVals)-0.5:gridStep:max(xVals)+0.5;
-    gridYValues = min(yVals)-0.5:gridStep:max(yVals)+0.5;
+    gridXValues = min(xVals):gridStep:max(xVals);
+    gridYValues = min(yVals):gridStep:max(yVals);
     
     % matlab (row,col) notation is (Y,X)
     classifiedValues = zeros(length(gridYValues),length(gridXValues));
