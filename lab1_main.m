@@ -230,13 +230,7 @@ hold off
 
 %% Part 4: Error Calculations
 % Recall that P(error) is the probability of making an incorrect
-% classification. A simple way to determine this is to generate MORE data
-% from the known distributions and then attempt to classify them using the
-% ones we have created. 
-
-
-% P(error) = incorrect classifications / total samples. Make sure to run it
-
+% classification.
 
 med_AB_error = calcError(@med, {data_a,data_b}, AB_means, [1,2]);
 med_CDE_error = calcError(@med, {data_c, data_d, data_e}, CDE_means, [1,2,3]);
@@ -420,7 +414,6 @@ nn_AB_error = nn_AB_error/(a_number + b_number);
 nn_CDE_error = nn_CDE_error/(c_number + d_number + e_number);
 knn_AB_error = knn_AB_error/(a_number + b_number);
 knn_CDE_error = knn_CDE_error/(c_number + d_number + e_number);
-
 
 % The confusion matrix is a table comparing Predicted to Actual values. The
 % reason that we want to do error calculation outside of a function is so
