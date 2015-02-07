@@ -193,7 +193,7 @@ hold on
 plot_data_epc(data_c, contour_c, 'b');
 plot_data_epc(data_d, contour_d, 'g');
 plot_data_epc(data_e, contour_e, 'r');
-contour(xValuesCDE,yValuesCDE,NN_CDE,1,'k');
+contour(xValuesCDE,yValuesCDE,NN_CDE,2,'k');
 hold off
 
 
@@ -222,7 +222,7 @@ end
 
 figure(120)
 hold on
-contour(xValuesCDE,yValuesCDE,KNN_CDE,1,'m');
+contour(xValuesCDE,yValuesCDE,KNN_CDE,2,'m');
 hold off
 
 
@@ -238,8 +238,23 @@ ged_AB_error = 0;
 ged_CDE_error = 0;
 map_AB_error = 0;
 map_CDE_error = 0;
+nn_AB_error = 0;
+nn_CDE_error = 0;
 knn_AB_error = 0;
 knn_CDE_error = 0;
+
+% need to generate new data sets for NN and kNN.
+
+% Class A
+[data_a_new, ~] = get_data(a_mean, a_sigma, a_number);
+% Class B
+[data_b_new, ~] = get_data(b_mean, b_sigma, b_number);
+% Class C
+[data_c_new, ~] = get_data(c_mean, c_sigma, c_number);
+% Class D
+[data_d_new, ~] = get_data(d_mean, d_sigma, d_number);
+% Class E
+[data_e_new, ~] = get_data(e_mean, e_sigma, e_number);
 
 %GED
 for i = 1:size(data_a,1)
@@ -256,7 +271,6 @@ for i = 1:size(data_b,1)
        ged_AB_error = ged_AB_error+1; 
     end
 end
-
 for i = 1:size(data_c,1)
     z = [data_c(i,1), data_c(i,2)];
     class = ged_3(z, c_sigma, c_mean, d_sigma, d_mean, e_sigma, e_mean);
@@ -297,7 +311,6 @@ for i = 1:size(data_b,1)
        map_AB_error = map_AB_error+1; 
     end
 end
-
 for i = 1:size(data_c,1)
     z = [data_c(i,1), data_c(i,2)];
     class = map_3(z,c_mean,c_sigma,c_number,...
@@ -326,12 +339,100 @@ for i = 1:size(data_e,1)
     end
 end
 
-med_AB_error = med_AB_error/(a_number+b_number);
+%NN
+for i = 1:size(data_a_new,1)
+   z = [data_a_new(i,1), data_a_new(i,2)];
+   class = nn_2(z, data_a, data_b);
+   if (class~=0)
+       nn_AB_error = nn_AB_error+1;
+   end
+end
+
+for i = 1:size(data_b_new,1)
+    z = [data_b_new(i,1), data_b_new(i,2)];
+    class = nn_2(z, data_a, data_b);
+    if (class~=1)
+        nn_AB_error = nn_AB_error+1;
+    end
+end
+
+for i = 1:size(data_c_new,1)
+   z = [data_c_new(i,1), data_c_new(i,2)];
+   class = nn_3(z, data_c, data_d, data_e);
+   if (class~=0)
+       nn_CDE_error = nn_CDE_error+1;
+   end
+end
+
+for i = 1:size(data_d_new,1)
+   z = [data_d_new(i,1), data_d_new(i,2)];
+   class = nn_3(z, data_c, data_d, data_e);
+   if (class~=1)
+       nn_CDE_error = nn_CDE_error+1;
+   end
+end
+
+for i = 1:size(data_e_new,1)
+    z = [data_e_new(i,1), data_e_new(i,1)];
+    class = nn_3(z, data_c, data_d, data_e);
+    if (class~=2)
+        nn_CDE_error = nn_CDE_error+1;
+    end
+end
+
+%KNN
+for i = 1:size(data_a_new, 1)
+   z = [data_a_new(i,1), data_a_new(i,2)];
+   class = nn_2(z, data_a, data_b);
+   if (class~=0)
+        knn_AB_error = knn_AB_error+1;
+   end
+end
+
+for i = 1:size(data_b_new, 1)
+    z = [data_b_new(i,1), data_b_new(i,2)];
+    class = nn_2(z, data_a, data_b);
+    if (class~=1)
+        knn_AB_error = knn_AB_error+1;
+    end
+end
+
+for i = 1:size(data_c_new, 1)
+    z = [data_c_new(i,1), data_c_new(i,2)];
+    class = nn_3(z, data_c, data_d, data_e);
+    if (class~=0)
+        knn_CDE_error = knn_CDE_error+1;
+    end
+end
+
+for i = 1:size(data_d_new, 1)
+    z = [data_d_new(i,1), data_d_new(i,2)];
+    class = nn_3(z, data_c, data_d, data_e);
+    if (class~=1)
+        knn_CDE_error = knn_CDE_error+1;
+    end
+end
+
+for i = 1:size(data_e_new, 1)
+    z = [data_e_new(i,1), data_e_new(i,2)];
+    class = nn_3(z, data_c, data_d, data_e);
+    if (class~=2)
+        knn_CDE_error = knn_CDE_error+1;
+    end
+end
+
+med_AB_error = med_AB_error/(a_number + b_number);
 med_CDE_error = med_CDE_error/(c_number + d_number + e_number);
 ged_AB_error = ged_AB_error/(a_number + b_number);
 ged_CDE_error = ged_CDE_error/(c_number + d_number + e_number);
 map_AB_error = map_AB_error/(a_number + b_number);
 map_CDE_error = map_CDE_error/(c_number + d_number + e_number);
+
+nn_AB_error = nn_AB_error/(a_number + b_number);
+nn_CDE_error = nn_CDE_error/(c_number + d_number + e_number);
+knn_AB_error = knn_AB_error/(a_number + b_number);
+knn_CDE_error = knn_CDE_error/(c_number + d_number + e_number);
+
 
 % The confusion matrix is a table comparing Predicted to Actual values. The
 % reason that we want to do error calculation outside of a function is so
