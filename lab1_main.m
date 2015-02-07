@@ -380,14 +380,14 @@ end
 %kNN
 for i = 1:size(data_a,1)
     z = [data_a(i,1), data_a(i,2)];
-    class = knn_2(z,data_a, data_b)
+    class = knn_2(z,data_a, data_b);
     if(class~=0)
        knn_AB_error = knn_AB_error+1; 
     end
 end
 for i = 1:size(data_b,1)
     z = [data_b(i,1), data_b(i,2)];
-    class = knn_2(z,data_a, data_b) 
+    class = knn_2(z,data_a, data_b);
     if(class~=1)
        knn_AB_error = knn_AB_error+1; 
     end
