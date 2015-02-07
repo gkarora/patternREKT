@@ -22,18 +22,20 @@ function [ class ] = knn_3( x, data_c, data_d, data_e )
     min_e_5 = sorted_e(1:5);
     min_e = mean2(min_e_5);
     
-    if (min_c<min_d)
-        if (min_c<min_e)
-            class = 0;
-        else
-            class = 2;
-        end
-    else
-        if (min_d<min_e)
-            class = 1;
-        else
-            class = 2;
-        end
+    if (min_c<min_d && min_c<min_e)
+        class = 0;
+    elseif(min_d<min_c && min_d<min_e)
+        class = 1;
+    elseif (min_e<min_c && min_e< min_d)
+        class = 2;
+    elseif (min_c<min_d && min_c == min_e)
+        class = 2;
+    elseif (min_d<min_c && min_d == min_e)
+        class = 1;
+    elseif (min_d<min_e && min_c == min_d)
+        class = 0;
+    elseif (min_d == min_e == min_c)
+        class = 0;
     end
 end
 
