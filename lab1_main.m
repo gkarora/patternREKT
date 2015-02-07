@@ -45,12 +45,22 @@ e_number = 150;
 figure
 plot_data_epc(data_a, contour_a, 'b');
 plot_data_epc(data_b, contour_b, 'r');
+title('Case 1: Class A and B');
+xlabel('x1');
+ylabel('x2');
+legend('Class A', 'Class A Unit STD', 'Class B', 'Class B Unit STD');
 hold off
-% 
+ 
 figure
 plot_data_epc(data_c, contour_c, 'b');
 plot_data_epc(data_d, contour_d, 'g');
 plot_data_epc(data_e, contour_e, 'm');
+title('Case 2: Class C, D, and E');
+xlabel('x1');
+ylabel('x2');
+legend('Class C', 'Class C Unit STD', 'Class D',...
+    'Class D Unit STD', 'Class E', 'Class E Unit STD');
+
 hold off
 
 %% Part 3 Classification
@@ -426,10 +436,6 @@ nn_CDE_error = nn_CDE_error/(c_number + d_number + e_number);
 knn_AB_error = knn_AB_error/(a_number + b_number);
 knn_CDE_error = knn_CDE_error/(c_number + d_number + e_number);
 
-nn_AB_error = nn_AB_error/(a_number + b_number);
-nn_CDE_error = nn_CDE_error/(c_number + d_number + e_number);
-knn_AB_error = knn_AB_error/(a_number + b_number);
-knn_CDE_error = knn_CDE_error/(c_number + d_number + e_number);
 
 
 % The confusion matrix is a table comparing Predicted to Actual values. The
