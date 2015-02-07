@@ -352,61 +352,28 @@ end
 
 for i = 1:size(data_c,1)
     z = [data_c(i,1), data_c(i,2)];
-    class = nn_3(z,data_c, data_d, data_e);
+            NN_CDE(i,j) = nn_3(z,data_c, data_d, data_e);
+ 
     if(class~=1)
        nn_CDE_error = nn_CDE_error+1; 
     end
 end
 for i = 1:size(data_d,1)
     z = [data_d(i,1), data_d(i,2)];
-    class = nn_3(z,data_c, data_d, data_e);
+    class = map_3(z,c_mean,c_sigma,c_number,...
+                    d_mean,d_sigma,d_number,...
+                    e_mean,e_sigma,e_number);        
     if(class~=2)
        nn_CDE_error = nn_CDE_error+1; 
     end
 end
 for i = 1:size(data_e,1)
     z = [data_e(i,1), data_e(i,2)];
-    class = nn_3(z,data_c, data_d, data_e);
+    class = map_3(z,c_mean,c_sigma,c_number,...
+                    d_mean,d_sigma,d_number,...
+                    e_mean,e_sigma,e_number);    
     if(class~=3)
        nn_CDE_error = nn_CDE_error+1; 
-    end
-end
-
-%kNN
-for i = 1:size(data_a,1)
-    z = [data_a(i,1), data_a(i,2)];
-    class = knn_2(z,data_a, data_b)
-    if(class~=1)
-       knn_AB_error = knn_AB_error+1; 
-    end
-end
-for i = 1:size(data_b,1)
-    z = [data_b(i,1), data_b(i,2)];
-    class = knn_2(z,data_a, data_b) 
-    if(class~=2)
-       knn_AB_error = knn_AB_error+1; 
-    end
-end
-
-for i = 1:size(data_c,1)
-    z = [data_c(i,1), data_c(i,2)];
-    class = knn_3(z,data_c, data_d, data_e);
-    if(class~=1)
-       knn_CDE_error = knn_CDE_error+1; 
-    end
-end
-for i = 1:size(data_d,1)
-    z = [data_d(i,1), data_d(i,2)];
-    class = knn_3(z,data_c, data_d, data_e);
-    if(class~=2)
-       knn_CDE_error = nn_CDE_error+1; 
-    end
-end
-for i = 1:size(data_e,1)
-    z = [data_e(i,1), data_e(i,2)];
-    class = knn_3(z,data_c, data_d, data_e);
-    if(class~=3)
-       knn_CDE_error = knn_CDE_error+1; 
     end
 end
 
@@ -416,10 +383,6 @@ ged_AB_error = ged_AB_error/(a_number + b_number);
 ged_CDE_error = ged_CDE_error/(c_number + d_number + e_number);
 map_AB_error = map_AB_error/(a_number + b_number);
 map_CDE_error = map_CDE_error/(c_number + d_number + e_number);
-nn_AB_error = nn_AB_error/(a_number + b_number);
-nn_CDE_error = nn_CDE_error/(c_number + d_number + e_number);
-knn_AB_error = knn_AB_error/(a_number + b_number);
-knn_CDE_error = knn_CDE_error/(c_number + d_number + e_number);
 
 
 % The confusion matrix is a table comparing Predicted to Actual values. The
