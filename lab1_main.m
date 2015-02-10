@@ -25,19 +25,19 @@ e_number = 150;
 %  variance 1.
 
 % Class A
-[data_a, contour_a] = get_data(a_mean, a_sigma, a_number);
+[data_a, contour_a] = get_data('A', a_mean, a_sigma, a_number);
 
 % Class B
-[data_b, contour_b] = get_data(b_mean, b_sigma, b_number);
+[data_b, contour_b] = get_data('B', b_mean, b_sigma, b_number);
 
 % Class C
-[data_c, contour_c] = get_data(c_mean, c_sigma, c_number);
+[data_c, contour_c] = get_data('C', c_mean, c_sigma, c_number);
 
 % Class D
-[data_d, contour_d] = get_data(d_mean, d_sigma, d_number);
+[data_d, contour_d] = get_data('D', d_mean, d_sigma, d_number);
 
 % Class E
-[data_e, contour_e] = get_data(e_mean, e_sigma, e_number);
+[data_e, contour_e] = get_data('E', e_mean, e_sigma, e_number);
 
 %% Part 2: Generating Clusters #2
 %  Plotting Classes A and B together and C, D, and E together.
@@ -97,6 +97,10 @@ contour(xValuesAB, yValuesAB, MED_AB,1,'k');
 hold on
 plot_data_epc(data_a, contour_a, 'b');
 plot_data_epc(data_b, contour_b, 'r');
+title('MED : Class A and B');
+xlabel('x1');
+ylabel('x2');
+legend('MED Decision Boundary','Class A', 'Class A Contour', 'Class B', 'Class B Contour');
 hold off
 
 %iterate through grid CDE
@@ -115,6 +119,10 @@ hold on
 plot_data_epc(data_c, contour_c, 'b');
 plot_data_epc(data_d, contour_d, 'g');
 plot_data_epc(data_e, contour_e, 'r');
+title('MED : Class C, D and E');
+xlabel('x1');
+ylabel('x2');
+legend('MED Decision Boundary','Class C', 'Class C Contour', 'Class D', 'Class D Contour', 'Class E', 'Class E Contour');
 hold off
 
 % STUPID RETARDED MAP CLASSIFIER
@@ -130,6 +138,10 @@ end
 figure(99)
 hold on
 contour(xValuesAB,yValuesAB,MAP_AB,1,'r');
+title('MAP : Class A and B');
+xlabel('x1');
+ylabel('x2');
+legend('MED Decision Boundary','Class A', 'Class A Contour', 'Class B', 'Class B Contour','MAP Decision Boundary');
 hold off
 
 for i = 1:size(MAP_CDE,1)
@@ -144,6 +156,10 @@ end
 figure(100)
 hold on
 contour(xValuesCDE,yValuesCDE,MAP_CDE,2,'r');
+title('MAP : Class C, D and E');
+xlabel('x1');
+ylabel('x2');
+legend('MED Decision Boundary','Class C', 'Class C Contour', 'Class D', 'Class D Contour', 'Class E', 'Class E Contour', 'MAP Decision Boundary');
 hold off
 
 % PREPARE THE GRIDS
@@ -158,6 +174,10 @@ end
 figure(99)
 hold on
 contour(xValuesAB,yValuesAB,GED_AB,1,'c');
+title('GED : Class A and B');
+xlabel('x1');
+ylabel('x2');
+legend('MED Decision Boundary','Class A', 'Class A Contour', 'Class B', 'Class B Contour','MAP Decision Boundary', 'GED Decision Boundary');
 hold off
 
 %iterate through grid CDE
@@ -171,6 +191,10 @@ end
 figure(100)
 hold on
 contour(xValuesCDE,yValuesCDE,GED_CDE,2,'c');
+title('GED : Class C, D and E');
+xlabel('x1');
+ylabel('x2');
+legend('MED Decision Boundary','Class C', 'Class C Contour', 'Class D', 'Class D Contour', 'Class E', 'Class E Contour', 'MAP Decision Boundary', 'GED Decision Boundary');
 hold off
 
 %NN - dis work doe
@@ -188,6 +212,10 @@ hold on
 plot_data_epc(data_a, contour_a, 'b');
 plot_data_epc(data_b, contour_b, 'r');
 contour(xValuesAB,yValuesAB,NN_AB,1,'c');
+title('NN : Class A and B');
+xlabel('x1');
+ylabel('x2');
+legend('Class A', 'Class A Contour', 'Class B', 'Class B Contour','NN Decision Boundary');
 hold off
 
 %NN_CDE
@@ -204,6 +232,10 @@ plot_data_epc(data_c, contour_c, 'b');
 plot_data_epc(data_d, contour_d, 'g');
 plot_data_epc(data_e, contour_e, 'r');
 contour(xValuesCDE,yValuesCDE,NN_CDE,2,'k');
+title('NN : Class C, D and E');
+xlabel('x1');
+ylabel('x2');
+legend('Class C', 'Class C Contour', 'Class D', 'Class D Contour', 'Class E', 'Class E Contour', 'NN Decision Boundary');
 hold off
 
 
@@ -220,6 +252,10 @@ end
 figure(110)
 hold on
 contour(xValuesAB,yValuesAB,KNN_AB,1,'m');
+title('5NN : Class A and B');
+xlabel('x1');
+ylabel('x2');
+legend('Class A', 'Class A Contour', 'Class B', 'Class B Contour','MAP Decision Boundary', 'NN Decision Boundary', '5NN Decision Boundary');
 hold off
 
 %KNN_CDE
@@ -233,6 +269,11 @@ end
 figure(120)
 hold on
 contour(xValuesCDE,yValuesCDE,KNN_CDE,2,'m');
+title('5NN : Class C, D and E');
+xlabel('x1');
+ylabel('x2');
+legend('Class C', 'Class C Contour', 'Class D', 'Class D Contour', 'Class E', 'Class E Contour', 'NN Decision Boundary', '5NN Decision Boundary');
+
 hold off
 
 
@@ -542,25 +583,25 @@ end
 
 
 
-med_AB_error = (med_AB_conf(1,2) + med_AB_conf(2,1)) / (a_number+b_number);
+med_AB_error = (med_AB_conf(1,2) + med_AB_conf(2,1)) / (a_number+b_number)
 med_CDE_error =  conf_matrix_error_sum(med_CDE_conf) / ...
-                  (a_number + b_number + c_number);
+                  (a_number + b_number + c_number)
 
-ged_AB_error = (ged_AB_conf(1,2) + ged_AB_conf(2,1)) / (a_number+b_number);
+ged_AB_error = (ged_AB_conf(1,2) + ged_AB_conf(2,1)) / (a_number+b_number)
 ged_CDE_error =  conf_matrix_error_sum(ged_CDE_conf) / ...
-                  (a_number + b_number + c_number);
+                  (a_number + b_number + c_number)
 
-map_AB_error = (map_AB_conf(1,2) + map_AB_conf(2,1)) / (a_number+b_number);
+map_AB_error = (map_AB_conf(1,2) + map_AB_conf(2,1)) / (a_number+b_number)
 map_CDE_error = conf_matrix_error_sum(map_CDE_conf) / ...
-                  (a_number + b_number + c_number);
+                  (a_number + b_number + c_number)
               
-nn_AB_error = (nn_AB_conf(1,2) + nn_AB_conf(2,1)) / (a_number+b_number);
+nn_AB_error = (nn_AB_conf(1,2) + nn_AB_conf(2,1)) / (a_number+b_number)
 nn_CDE_error = conf_matrix_error_sum(nn_CDE_conf) / ...
-                  (a_number + b_number + c_number);
+                  (a_number + b_number + c_number)
              
-knn_AB_error = (knn_AB_conf(1,2) + knn_AB_conf(2,1)) / (a_number+b_number);
+knn_AB_error = (knn_AB_conf(1,2) + knn_AB_conf(2,1)) / (a_number+b_number)
 knn_CDE_error = conf_matrix_error_sum(knn_CDE_conf) / ...
-                  (a_number + b_number + c_number);
+                  (a_number + b_number + c_number)
 
 
 % The confusion matrix is a table comparing Predicted to Actual values. The
